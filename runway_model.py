@@ -16,12 +16,13 @@ def recognize(model, inputs):
     bboxes = []
     for label, bbox in predictions:
         labels.append(label)
-        p1, p2, p3, _ = bbox
+        min_x, min_y = bbox.min(0)
+        max_x, max_y = bbox.max(0)
         bboxes.append([
-            p1[0] / width,
-            p1[1] / height,
-            p2[0] / width,
-            p3[1] / height
+            min_x / width,
+            min_y / height,
+            max_x / width,
+            max_y / height
         ])
     return {'labels': labels, 'bboxes': bboxes}
 
